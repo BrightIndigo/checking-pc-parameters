@@ -2,21 +2,15 @@ import psutil
 import platform
 import subprocess
 import GPUtil
+from cpuinfo import get_cpu_info
 
 cpu_usage = psutil.cpu_percent(interval=1)
 print("CPU usage: ", cpu_usage)
-
-memory = psutil.virtual_memory()
-print("Total Memory:", memory.total)
-print("Available Memory:", memory.available)
-print("Used Memory:", memory.used)
-print("Memory Percentage:", memory.percent)
-
-system_info = platform.uname()
-print("System Info:", system_info)
-
 cpu_info = platform.processor()
 print("CPU Info:", cpu_info)
+#details of cpu
+for key, value in get_cpu_info().items():
+        print("{0}: {1}".format(key, value))
 
 try:
     # Get CPU load using 'wmic' command (Windows)
@@ -33,6 +27,16 @@ try:
     print("RAM Usage:", ram_usage)
 except subprocess.CalledProcessError as e:
     print("Error:", e)
+
+memory = psutil.virtual_memory()
+print("Total Memory:", memory.total)
+print("Available Memory:", memory.available)
+print("Used Memory:", memory.used)
+print("Memory Percentage:", memory.percent)
+
+system_info = platform.uname()
+print("System Info:", system_info)
+
 
 try:
     print("Utilization of gpu:")
