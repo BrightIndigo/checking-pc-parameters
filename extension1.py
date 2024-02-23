@@ -2,6 +2,7 @@ import customtkinter as ctk
 import random
 import main
 from cpuinfo import get_cpu_info
+import time
 
 cpu_usage = main.cpu_usage
 memory_total = main.memory.total
@@ -15,7 +16,16 @@ ram_usage = main.ram_usage
 gpus = main.gpus
 
 
+
+
+window = ctk.CTk()
+window.title("Animated Widgets")
+window.geometry('1000x700')
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
+
 def details():
+
     for widget in window.winfo_children():
         widget.destroy()
 
@@ -33,14 +43,9 @@ def details():
 
     label = ctk.CTkLabel(master=window, text=cpu_info_str)
     label.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=1, anchor='center')
-
-
-window = ctk.CTk()
-window.title("Animated Widgets")
-window.geometry('1000x700')
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("dark-blue")
-
+    button_x = 0.5
+    button = ctk.CTkButton(window, text='main menu', command=menu)
+    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
 def cpu():
     for widget in window.winfo_children():
         widget.destroy()
@@ -93,4 +98,3 @@ menu()
 
 
 window.mainloop()
-
