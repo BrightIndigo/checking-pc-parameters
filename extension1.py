@@ -3,6 +3,7 @@ import random
 import main
 from cpuinfo import get_cpu_info
 import time
+import GPUtil
 
 cpu_usage = main.cpu_usage
 memory_total = main.memory.total
@@ -67,6 +68,47 @@ def gpu():
     for widget in window.winfo_children():
         widget.destroy()
 
+    gpu_utilization = GPUtil.getGPUs()[0].load * 100
+
+    label = ctk.CTkLabel(master=window, text=f"Utilization of GPU: {gpu_utilization}")
+    label.place(relx=0.5, rely=0.05, relheight=0.05, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.1, relheight=0.01, relwidth=1, anchor='center')
+
+    gpu_info = ""
+
+    for gpu in gpus:
+        gpu_info += "GPU ID: "+str(gpu.id)+"\n"
+        print("GPU ID:", gpu.id)
+        gpu_info += "GPU Name: " + str(gpu.name) + "\n"
+        print("GPU Name:", gpu.name)
+        gpu_info += "GPU Memory Total: " + str(gpu.memoryTotal) + "\n"
+        print("GPU Memory Total:", gpu.memoryTotal)
+        gpu_info += "GPU Memory Used: " + str(gpu.memoryUsed) + "\n"
+        print("GPU Memory Used:", gpu.memoryUsed)
+        gpu_info += "GPU Memory Free: " + str(gpu.memoryFree) + "\n"
+        print("GPU Memory Free:", gpu.memoryFree)
+        gpu_info += "GPU Temperature: " + str(gpu.temperature) + "\n"
+        print("GPU Temperature:", gpu.temperature)
+        gpu_info += "GPU Load: " + str(gpu.load * 100) + "\n"
+        print("GPU Load:", gpu.load * 100)  # GPU load is returned as a fraction
+        gpu_info += "GPU UUID: " + str(gpu.uuid) + "\n"
+        print("GPU UUID:", gpu.uuid)
+        gpu_info += "GPU Driver: " + str(gpu.driver) + "\n"
+        print("GPU Driver:", gpu.driver)
+        gpu_info += "GPU Serial: " + str(gpu.serial) + "\n"
+        print("GPU Serial:", gpu.serial)
+        print("\n")
+
+
+    label = ctk.CTkLabel(master=window, text=f"GPU info: {gpu_info}")
+    label.place(relx=0.5, rely=0.4, relheight=0.4, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.2, relheight=0.01, relwidth=1, anchor='center')
+
+    button_x = 0.5
+    button = ctk.CTkButton(window, text='menu', command=menu)
+    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
 def memory():
     for widget in window.winfo_children():
         widget.destroy()
