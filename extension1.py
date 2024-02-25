@@ -101,10 +101,10 @@ def gpu():
         print("\n")
 
 
-    label = ctk.CTkLabel(master=window, text=f"GPU info: {gpu_info}")
-    label.place(relx=0.5, rely=0.4, relheight=0.4, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f"{gpu_info}")
+    label.place(relx=0.5, rely=0.25, relheight=0.23, relwidth=1, anchor='center')
     frame = ctk.CTkFrame(master=window, corner_radius=10)
-    frame.place(relx=0.5, rely=0.2, relheight=0.01, relwidth=1, anchor='center')
+    frame.place(relx=0.5, rely=0.4, relheight=0.01, relwidth=1, anchor='center')
 
     button_x = 0.5
     button = ctk.CTkButton(window, text='menu', command=menu)
