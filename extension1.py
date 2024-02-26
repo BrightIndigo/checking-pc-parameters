@@ -4,6 +4,34 @@ import main
 from cpuinfo import get_cpu_info
 import time
 import GPUtil
+import psutil
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from collections import deque
+
+def real_time_graph():
+    cpu_loads = deque(maxlen=50)
+
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [])
+
+    def update(frame):
+        cpu_load = psutil.cpu_percent()
+        cpu_loads.append(cpu_load)
+        line.set_data(range(len(cpu_loads)), cpu_loads)
+        ax.set_xlim(0, len(cpu_loads))
+        ax.set_ylim(0, 100)
+        return line,
+
+    ani = animation.FuncAnimation(fig, update, interval=1000)
+
+    plt.xlabel('Time')
+    plt.ylabel('CPU Load (%)')
+    plt.title('Real-time CPU Load')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
 
 cpu_usage = main.cpu_usage
 memory_total = main.memory.total
@@ -26,9 +54,20 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
 def details():
+    real_time_graph()
 
+def cpu():
     for widget in window.winfo_children():
         widget.destroy()
+    label = ctk.CTkLabel(master=window, text=f"CPU usage: {cpu_usage}")
+    label.place(relx=0.5, rely=0.05, relheight=0.05, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.1, relheight=0.01, relwidth=1, anchor='center')
+
+    label = ctk.CTkLabel(master=window, text=f"CPU info {cpu_info}")
+    label.place(relx=0.5, rely=0.15, relheight=0.05, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.2, relheight=0.01, relwidth=1, anchor='center')
 
     cpu_info_str = ""
     cpu_info_table = []
@@ -44,21 +83,6 @@ def details():
 
     label = ctk.CTkLabel(master=window, text=cpu_info_str)
     label.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=1, anchor='center')
-    button_x = 0.5
-    button = ctk.CTkButton(window, text='main menu', command=menu)
-    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
-def cpu():
-    for widget in window.winfo_children():
-        widget.destroy()
-    label = ctk.CTkLabel(master=window, text=f"CPU usage: {cpu_usage}")
-    label.place(relx=0.5, rely=0.05, relheight=0.05, relwidth=1, anchor='center')
-    frame = ctk.CTkFrame(master=window, corner_radius=10)
-    frame.place(relx=0.5, rely=0.1, relheight=0.01, relwidth=1, anchor='center')
-
-    label = ctk.CTkLabel(master=window, text=f"CPU info {cpu_info}")
-    label.place(relx=0.5, rely=0.15, relheight=0.05, relwidth=1, anchor='center')
-    frame = ctk.CTkFrame(master=window, corner_radius=10)
-    frame.place(relx=0.5, rely=0.2, relheight=0.01, relwidth=1, anchor='center')
 
     button_x = 0.5
     button = ctk.CTkButton(window, text='details', command=details)
