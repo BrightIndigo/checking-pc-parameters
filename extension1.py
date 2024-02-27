@@ -82,11 +82,14 @@ def cpu():
         cpu_info_str += i
 
     label = ctk.CTkLabel(master=window, text=cpu_info_str)
-    label.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=1, anchor='center')
+    label.place(relx=0.5, rely=0.35, relheight=0.5, relwidth=1, anchor='center')
 
     button_x = 0.5
     button = ctk.CTkButton(window, text='details', command=details)
-    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
+    button.place(relx=button_x, rely=0.65, relheight=0.1, relwidth=0.5, anchor='center')
+    button_x = 0.5
+    button = ctk.CTkButton(window, text='menu', command=menu)
+    button.place(relx=button_x, rely=0.85, relheight=0.1, relwidth=0.5, anchor='center')
 
 def gpu():
     for widget in window.winfo_children():
@@ -136,6 +139,41 @@ def gpu():
 def memory():
     for widget in window.winfo_children():
         widget.destroy()
+
+    mem_total = main.mem_total
+    mem_available = main.mem_available
+    mem_percent_used = main.mem_available
+    mem_used = main.mem_used
+    mem_free = main.mem_free
+
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.05, relheight=0.01, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f"Total physical memory: {mem_total} GB")
+    label.place(relx=0.5, rely=0.1, relheight=0.02, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.15, relheight=0.01, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f'Available memory:  {mem_available} GB')
+    label.place(relx=0.5, rely=0.2, relheight=0.02, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.25, relheight=0.01, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f"RAM memory % used: {mem_percent_used}%")
+    label.place(relx=0.5, rely=0.3, relheight=0.02, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.35, relheight=0.01, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f"Used: {mem_used} GB")
+    label.place(relx=0.5, rely=0.4, relheight=0.02, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.45, relheight=0.01, relwidth=1, anchor='center')
+    label = ctk.CTkLabel(master=window, text=f"Free: {mem_free} GB")
+    label.place(relx=0.5, rely=0.5, relheight=0.02, relwidth=1, anchor='center')
+    frame = ctk.CTkFrame(master=window, corner_radius=10)
+    frame.place(relx=0.5, rely=0.55, relheight=0.01, relwidth=1, anchor='center')
+
+    button_x = 0.5
+    button = ctk.CTkButton(window, text='details', command=details)
+    button.place(relx=button_x, rely=0.65, relheight=0.1, relwidth=0.5, anchor='center')
+    button = ctk.CTkButton(window, text='menu', command=menu)
+    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
 
 def systeminfo():
     for widget in window.winfo_children():

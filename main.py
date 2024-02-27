@@ -60,3 +60,29 @@ try:
         print("\n")
 except Exception as e:
     print("Error:", e)
+
+
+# memory with psutil
+
+mem_total_b = psutil.virtual_memory().total
+mem_available_b = psutil.virtual_memory().available
+mem_percent_used_b = psutil.virtual_memory().percent
+mem_used_b = psutil.virtual_memory().used
+mem_free_b = psutil.virtual_memory().free
+
+def bytes_to_gb(bytes):
+    gb = bytes / (1024**3)
+    gb = round(gb, 2)
+    return gb
+
+mem_total = bytes_to_gb(mem_total_b)
+mem_available = bytes_to_gb(mem_available_b)
+mem_percent_used = mem_percent_used_b
+mem_used = bytes_to_gb(mem_used_b)
+mem_free = bytes_to_gb(mem_free_b)
+
+print('Total physical memory: ', mem_total, 'GB')
+print('Available memory: ', mem_available, 'GB')
+print('RAM memory % used: ', mem_percent_used, '%')
+print('Used: ', mem_used, 'GB')
+print('Free: ', mem_free, 'GB')
