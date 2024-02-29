@@ -56,6 +56,33 @@ ctk.set_default_color_theme("dark-blue")
 def details():
     real_time_graph()
 
+def details_gpu():
+    gpu_loads = deque(maxlen=50)
+
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [])
+
+    def update(frame):
+        gpus = GPUtil.getGPUs()
+        gpu_load = None
+        for gpu in gpus:
+            gpu_load = gpu.load * 100
+
+        gpu_loads.append(gpu_load)
+        line.set_data(range(len(gpu_loads)), gpu_loads)
+        ax.set_xlim(0, len(gpu_loads))
+        ax.set_ylim(0, 100)
+        return line,
+
+    ani = animation.FuncAnimation(fig, update, interval=1000)
+
+    plt.xlabel('Time')
+    plt.ylabel('GPU Load (%)')
+    plt.title('Real-time GPU Load')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
 def cpu():
     for widget in window.winfo_children():
         widget.destroy()
@@ -89,7 +116,7 @@ def cpu():
     button.place(relx=button_x, rely=0.65, relheight=0.1, relwidth=0.5, anchor='center')
     button_x = 0.5
     button = ctk.CTkButton(window, text='menu', command=menu)
-    button.place(relx=button_x, rely=0.85, relheight=0.1, relwidth=0.5, anchor='center')
+    button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
 
 def gpu():
     for widget in window.winfo_children():
@@ -136,6 +163,8 @@ def gpu():
     button_x = 0.5
     button = ctk.CTkButton(window, text='menu', command=menu)
     button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
+    button = ctk.CTkButton(window, text='details', command=details_gpu)
+    button.place(relx=button_x, rely=0.65, relheight=0.1, relwidth=0.5, anchor='center')
 def memory():
     for widget in window.winfo_children():
         widget.destroy()
