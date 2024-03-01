@@ -83,6 +83,30 @@ def details_gpu():
     plt.tight_layout()
     plt.show()
 
+def details_mem():
+    mem_loads = deque(maxlen=50)
+
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [])
+
+    def update(frame):
+        mem_percent_used = psutil.virtual_memory().percent
+
+        mem_loads.append(mem_percent_used)
+        line.set_data(range(len(mem_loads)), mem_loads)
+        ax.set_xlim(0, len(mem_loads))
+        ax.set_ylim(0, 100)
+        return line,
+
+    ani = animation.FuncAnimation(fig, update, interval=1000, frames=None)
+
+    plt.xlabel('Time')
+    plt.ylabel('Memory Load (%)')
+    plt.title('Real-time Memory Load')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
 def cpu():
     for widget in window.winfo_children():
         widget.destroy()
@@ -199,7 +223,7 @@ def memory():
     frame.place(relx=0.5, rely=0.55, relheight=0.01, relwidth=1, anchor='center')
 
     button_x = 0.5
-    button = ctk.CTkButton(window, text='details', command=details)
+    button = ctk.CTkButton(window, text='details', command=details_mem)
     button.place(relx=button_x, rely=0.65, relheight=0.1, relwidth=0.5, anchor='center')
     button = ctk.CTkButton(window, text='menu', command=menu)
     button.place(relx=button_x, rely=0.8, relheight=0.1, relwidth=0.5, anchor='center')
