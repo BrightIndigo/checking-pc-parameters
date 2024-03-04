@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import random
-import main
+import tests
 from cpuinfo import get_cpu_info
 import time
 import GPUtil
