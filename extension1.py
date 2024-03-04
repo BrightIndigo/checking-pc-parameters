@@ -200,7 +200,7 @@ def memory():
     label.place(relx=0.5, rely=0.12, relheight=0.02, relwidth=1, anchor='center')
 
 
-    label = ctk.CTkLabel(master=window, text=f"RAM memory % used: {mem_percent_used}%")
+    label = ctk.CTkLabel(master=window, text=f"RAM memory used: {mem_percent_used}%")
     label.place(relx=0.5, rely=0.14, relheight=0.02, relwidth=1, anchor='center')
 
     label = ctk.CTkLabel(master=window, text=f"Used: {mem_used} GB")
