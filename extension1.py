@@ -1,5 +1,3 @@
-from tkinter import PhotoImage
-
 import customtkinter as ctk
 import random
 import main
