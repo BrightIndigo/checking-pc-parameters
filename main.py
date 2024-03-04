@@ -34,16 +34,16 @@ def real_time_graph():
     plt.show()
 
 
-cpu_usage = main.cpu_usage
-memory_total = main.memory.total
-memory_available = main.memory.available
-memory_used = main.memory.used
-memory_percent = main.memory.percent
-system_info = main.system_info
-cpu_info = main.cpu_info
-cpu_load = main.cpu_load
-ram_usage = main.ram_usage
-gpus = main.gpus
+cpu_usage = tests.cpu_usage
+memory_total = tests.memory.total
+memory_available = tests.memory.available
+memory_used = tests.memory.used
+memory_percent = tests.memory.percent
+system_info = tests.system_info
+cpu_info = tests.cpu_info
+cpu_load = tests.cpu_load
+ram_usage = tests.ram_usage
+gpus = tests.gpus
 
 
 
@@ -185,11 +185,11 @@ def memory():
     for widget in window.winfo_children():
         widget.destroy()
 
-    mem_total = main.mem_total
-    mem_available = main.mem_available
-    mem_percent_used = main.mem_available
-    mem_used = main.mem_used
-    mem_free = main.mem_free
+    mem_total = tests.mem_total
+    mem_available = tests.mem_available
+    mem_percent_used = tests.mem_available
+    mem_used = tests.mem_used
+    mem_free = tests.mem_free
 
     label = ctk.CTkLabel(master=window, text=f"Total physical memory: {mem_total} GB")
     label.place(relx=0.5, rely=0.1, relheight=0.02, relwidth=1, anchor='center')
